@@ -1,0 +1,19 @@
+{
+  "name": "dragsnip",
+  "version": "0.1.0",
+  "description": "Dragging a selection on any enabled element",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mxcd/dragsnip.git"
+  },
+  "author": "Max Partenfelder",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mxcd/dragsnip/issues"
+  },
+  "homepage": "https://github.com/mxcd/dragsnip#readme"
+}

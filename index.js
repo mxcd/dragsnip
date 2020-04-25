@@ -87,8 +87,8 @@ function install_canvas(element) {
 
 function get_target_coords(e) {
     return {
-        x: e.clientX - parseInt(e.target.style.left.replace("px", "")),
-        y: e.clientY - parseInt(e.target.style.top.replace("px", ""))
+        x: e.pageX - parseInt(e.target.style.left.replace("px", "")),
+        y: e.pageY - parseInt(e.target.style.top.replace("px", ""))
     }
 }
 

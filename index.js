@@ -26,30 +26,51 @@ class Snippable {
     constructor(element, callback) {
         element.setAttribute('draggable', false);
         this.canvas = install_canvas(element);
+        this.callback = callback;
+
+        this.last_event = 0;
 
         this.dragging = false;
         this.drag_start = {};
         this.drag_end = {};
 
-        this.canvas.addEventListener('click', this.element_click.bind(this));
         this.canvas.addEventListener('mousemove', this.element_refresh.bind(this));
+        this.canvas.addEventListener('mousedown', this.element_dragstart.bind(this));
+        this.canvas.addEventListener('mouseup', this.element_dragend.bind(this));
 
-        this.callback = callback;
     }
 
     element_click(e) {
-        if(!this.dragging) {
+        if(new Date() - this.last_event > 250) {
+            console.log("evaluation click")
+            if(!this.dragging) {
+                this.element_dragstart(e);
+            }
+            else {
+                this.element_dragend(e);
+            }
+        }
+    }
+
+    element_dragstart(e) {
+        if (!this.dragging) {
             this.dragging = true;
             this.clear_canvas();
             this.drag_start = get_target_coords(e);
+            this.drag_end = this.drag_start;
             this.drag_start_relative = get_relative_coords(e);
+            this.last_event = new Date();
         }
-        else {
+    }
+
+    element_dragend(e) {
+        if(new Date() - this.last_event > 500 && this.dragging) {
             this.dragging = false;
             this.drag_end = get_target_coords(e);
             this.drag_end_relative = get_relative_coords(e);
             this.draw_rect();
-            this.callback(this.drag_start_relative, this.drag_end_relative)
+            this.callback(this.drag_start_relative, this.drag_end_relative);
+            this.last_event = new Date();
         }
     }
 
@@ -71,6 +92,10 @@ class Snippable {
         let ctx = this.canvas.getContext("2d");
         ctx.strokeRect(this.drag_start.x, this.drag_start.y, this.drag_end.x - this.drag_start.x, this.drag_end.y - this.drag_start.y);
     }
+}
+
+function distance(start, end) {
+    return Math.sqrt(Math.pow(end.x - start.x, 2) + Math.pow(end.y - start.y, 2))
 }
 
 function install_canvas(element) {

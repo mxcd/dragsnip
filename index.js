@@ -77,8 +77,9 @@ function install_canvas(element) {
     let body = document.getElementsByTagName("body")[0];
     let canvas = document.createElement("canvas");
     canvas.style.position = "absolute";
-    canvas.style.top = `${element.y}px`;
-    canvas.style.left = `${element.x}px`;
+    let element_offset = cumulativeOffset(element);
+    canvas.style.top = `${element_offset.top}px`;
+    canvas.style.left = `${element_offset.left}px`;
     canvas.width = element.clientWidth;
     canvas.height = element.clientHeight;
     body.appendChild(canvas);
@@ -116,4 +117,19 @@ function isElement(o){
         typeof HTMLElement === "object" ? o instanceof HTMLElement : //DOM2
             o && typeof o === "object" && true && o.nodeType === 1 && typeof o.nodeName==="string"
     );
+}
+
+// https://stackoverflow.com/a/1480137/891624
+function cumulativeOffset(element) {
+    let top = 0, left = 0;
+    do {
+        top += element.offsetTop  || 0;
+        left += element.offsetLeft || 0;
+        element = element.offsetParent;
+    } while(element);
+
+    return {
+        top: top,
+        left: left
+    };
 }

@@ -103,18 +103,18 @@ function install_canvas(element) {
     let canvas = document.createElement("canvas");
     canvas.style.position = "absolute";
     let element_offset = cumulativeOffset(element);
-    canvas.style.top = `${element_offset.top}px`;
-    canvas.style.left = `${element_offset.left}px`;
+    // canvas.style.top = `${element_offset.top}px`;
+    // canvas.style.left = `${element_offset.left}px`;
     canvas.width = element.clientWidth;
     canvas.height = element.clientHeight;
-    body.appendChild(canvas);
+    element.parentElement.appendChild(canvas);
     return canvas;
 }
 
 function get_target_coords(e) {
     return {
-        x: e.pageX - parseInt(e.target.style.left.replace("px", "")),
-        y: e.pageY - parseInt(e.target.style.top.replace("px", ""))
+        x: e.layerX,//e.pageX - parseInt(e.target.style.left.replace("px", "")),
+        y: e.layerY//e.pageY - parseInt(e.target.style.top.replace("px", ""))
     }
 }
 

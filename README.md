@@ -26,8 +26,13 @@ let cb = (start, end) => {
     console.log(`end: x: ${end.x} | y: ${end.y}`);
 };
 
+// define options
+const options = {
+    strokeColor: '#F0FFFF', // Defaults to '#000000'
+}
+
 // register your DOM element alongside with your callback
-dragsnip.register(snip_area, cb);
+dragsnip.register(snip_area, cb, options);
 
 // Profit. Try to click and drag on your image
 ```

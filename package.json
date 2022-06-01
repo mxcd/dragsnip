@@ -1,6 +1,6 @@
 {
   "name": "dragsnip",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Dragging a selection on any enabled element",
   "main": "index.js",
   "scripts": {

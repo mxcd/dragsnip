@@ -1,4 +1,4 @@
-exports.register = (snip_area, cb)=> {
+exports.register = (snip_area, cb, options)=> {
     let elements = [];
     if(!isElement(snip_area)) {
         try {
@@ -18,12 +18,12 @@ exports.register = (snip_area, cb)=> {
     console.log(`Got ${elements.length} ${elements.length === 1 ? 'element' : 'elements'} to be registered as snip area`);
 
     for(let el of elements) {
-        new Snippable(el, cb)
+        new Snippable(el, cb, options)
     }
 };
 
 class Snippable {
-    constructor(element, callback) {
+    constructor(element, callback, options) {
         element.setAttribute('draggable', false);
         this.canvas = install_canvas(element);
         this.callback = callback;
@@ -33,6 +33,8 @@ class Snippable {
         this.dragging = false;
         this.drag_start = {};
         this.drag_end = {};
+
+        this.strokeColor = options.strokeColor || '#000000';
 
         this.canvas.addEventListener('mousemove', this.element_refresh.bind(this));
         this.canvas.addEventListener('mousedown', this.element_dragstart.bind(this));
@@ -90,6 +92,7 @@ class Snippable {
     draw_rect() {
         this.clear_canvas();
         let ctx = this.canvas.getContext("2d");
+        ctx.strokeStyle = this.strokeColor;
         ctx.strokeRect(this.drag_start.x, this.drag_start.y, this.drag_end.x - this.drag_start.x, this.drag_end.y - this.drag_start.y);
     }
 }

@@ -34,7 +34,7 @@ class Snippable {
         this.drag_start = {};
         this.drag_end = {};
 
-        this.strokeColor = options.strokeColor || '#000000';
+        this.strokeColor = options && options.strokeColor ? options.strokeColor : '#000000';
 
         this.canvas.addEventListener('mousemove', this.element_refresh.bind(this));
         this.canvas.addEventListener('mousedown', this.element_dragstart.bind(this));
